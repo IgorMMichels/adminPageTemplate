@@ -1,0 +1,43 @@
+name: Supabase CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  supabase-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker
+        uses: docker/setup-action@v4
+
+      - name: Start Supabase
+        uses: supabase/setup-cli@v1
+        with:
+          version: latest
+
+      - name: Start Supabase local
+        run: |
+          supabase start
+          supabase status
+          supabase db reset
+
+      - name: Verify API
+        run: |
+          curl -s http://localhost:54321/rest/v1/ | head -c 50
+
+      - name: Run type check
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit status
+        if: always()
+        run: |
+          echo "Workflow completed at $(date)"
