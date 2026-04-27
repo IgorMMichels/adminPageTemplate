@@ -117,6 +117,17 @@ export default function Landing() {
         </div>
       </main>
 
+      {/* Credentials Hint */}
+      <div className="w-full border-t border-slate-200 bg-slate-50">
+        <div className="container mx-auto px-4 py-3 flex items-center justify-center gap-4 text-xs text-slate-500">
+          <span>Admin access:</span>
+          <code className="bg-white px-2 py-1 rounded border border-slate-200 text-slate-700">admin</code>
+          <span>/</span>
+          <code className="bg-white px-2 py-1 rounded border border-slate-200 text-slate-700">0000</code>
+          <a href="/admin/login" className="text-primary hover:underline font-medium">Login →</a>
+        </div>
+      </div>
+
       {/* Footer */}
       <footer className="w-full border-t border-slate-200 bg-white/80 backdrop-blur-sm">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-slate-500">
