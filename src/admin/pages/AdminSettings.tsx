@@ -23,12 +23,12 @@ export default function AdminSettings() {
   } = useAdmin();
   const { toast } = useToast();
   
-  // Guard against undefined siteConfig
+// Guard against undefined siteConfig
   if (!siteConfig) {
     return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
   }
   
-const safeSiteConfig = siteConfig || defaultSiteConfig;
+  const safeSiteConfig = siteConfig || defaultSiteConfig;
   const [company, setCompany] = useState(safeSiteConfig.company);
   const [hero, setHero] = useState(safeSiteConfig.hero);
   const [about, setAbout] = useState(safeSiteConfig.about);
