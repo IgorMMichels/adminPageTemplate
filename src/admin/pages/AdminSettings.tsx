@@ -23,12 +23,10 @@ export default function AdminSettings() {
   } = useAdmin();
   const { toast } = useToast();
   
-// Guard against undefined siteConfig
-  if (!siteConfig) {
-    return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
-  }
-  
+  // Use siteConfig from context, fallback to default - NEVER early return
   const safeSiteConfig = siteConfig || defaultSiteConfig;
+  
+  // All hooks called unconditionally - no early returns!
   const [company, setCompany] = useState(safeSiteConfig.company);
   const [hero, setHero] = useState(safeSiteConfig.hero);
   const [about, setAbout] = useState(safeSiteConfig.about);

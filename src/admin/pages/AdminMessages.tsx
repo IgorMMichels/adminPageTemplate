@@ -13,12 +13,11 @@ import { useToast } from '@/hooks/use-toast';
 export default function AdminMessages() {
   const { siteConfig, updateSiteConfig, resetSiteConfig } = useAdmin();
   const { toast } = useToast();
-  // Guard against undefined siteConfig
-  if (!siteConfig) {
-    return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
-  }
-
+  
+  // Use siteConfig from context, fallback to default
   const safeSiteConfig = siteConfig || defaultSiteConfig;
+  
+  // All hooks called unconditionally - no early returns!
   const [localConfig, setLocalConfig] = useState(safeSiteConfig);
 
   const handleSave = () => {
