@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useAdmin } from '../context/AdminContext';
+import { defaultSiteConfig } from '@/data/siteConfig';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -21,23 +22,30 @@ export default function AdminSettings() {
     isMigrating 
   } = useAdmin();
   const { toast } = useToast();
-  const [company, setCompany] = useState(siteConfig.company);
-  const [hero, setHero] = useState(siteConfig.hero);
-  const [about, setAbout] = useState(siteConfig.about);
-  const [footer, setFooter] = useState(siteConfig.footer);
-  const [seo, setSeo] = useState(siteConfig.seo);
-  const [contact, setContact] = useState(siteConfig.contact);
+  
+  // Guard against undefined siteConfig
+  if (!siteConfig) {
+    return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
+  }
+  
+const safeSiteConfig = siteConfig || defaultSiteConfig;
+  const [company, setCompany] = useState(safeSiteConfig.company);
+  const [hero, setHero] = useState(safeSiteConfig.hero);
+  const [about, setAbout] = useState(safeSiteConfig.about);
+  const [footer, setFooter] = useState(safeSiteConfig.footer);
+  const [seo, setSeo] = useState(safeSiteConfig.seo);
+  const [contact, setContact] = useState(safeSiteConfig.contact);
   const [migrationProgress, setMigrationProgress] = useState(0);
   const [migrationMessage, setMigrationMessage] = useState('');
 
   useEffect(() => {
-    setCompany(siteConfig.company);
-    setHero(siteConfig.hero);
-    setAbout(siteConfig.about);
-    setFooter(siteConfig.footer);
-    setSeo(siteConfig.seo);
-    setContact(siteConfig.contact);
-  }, [siteConfig]);
+    setCompany(safeSiteConfig.company);
+    setHero(safeSiteConfig.hero);
+    setAbout(safeSiteConfig.about);
+    setFooter(safeSiteConfig.footer);
+    setSeo(safeSiteConfig.seo);
+    setContact(safeSiteConfig.contact);
+  }, [safeSiteConfig]);
 
   const handleSave = () => {
     updateSiteConfig({ company, hero, about, footer, seo, contact });

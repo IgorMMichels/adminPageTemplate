@@ -8,6 +8,8 @@ export interface HeroConfig {
   title: string;
   subtitle: string;
   description: string;
+  ctaText: string;
+  ctaSecondaryText: string;
   image: string;
 }
 
@@ -16,6 +18,12 @@ export interface AboutConfig {
   subtitle: string;
   description: string;
   image: string;
+  stats: {
+    years: string;
+    clients: string;
+    products: string;
+    states: string;
+  };
 }
 
 export interface FeaturesConfig {
@@ -48,17 +56,37 @@ export interface ContactConfig {
   address: string;
   phone: string;
   email: string;
+  formLabels: {
+    name: string;
+    email: string;
+    phone: string;
+    submit: string;
+  };
 }
 
 export interface FooterConfig {
   description: string;
   copyright: string;
+  socialLinks: {
+    facebook?: string;
+    instagram?: string;
+    linkedin?: string;
+    youtube?: string;
+  };
 }
 
 export interface SiteConfig {
   company: {
     name: string;
-    tagline: string;
+    slogan: string;
+    cnpj: string;
+    founded: string;
+    phone: string;
+    email: string;
+    whatsapp: string;
+    address: string;
+    city: string;
+    state: string;
     description: string;
     logo: string;
   };
@@ -75,7 +103,15 @@ export interface SiteConfig {
 export const defaultSiteConfig: SiteConfig = {
   company: {
     name: "Your Company Name",
-    tagline: "Your Tagline Here",
+    slogan: "Your Tagline Here",
+    cnpj: "00.000.000/0001-00",
+    founded: "2013",
+    phone: "(00) 0000-0000",
+    email: "contact@example.com",
+    whatsapp: "5500000000000",
+    address: "Your Address Here",
+    city: "Your City",
+    state: "ST",
     description: "Brief description of your company and what you do.",
     logo: "/placeholder.svg",
   },
@@ -83,6 +119,8 @@ export const defaultSiteConfig: SiteConfig = {
     title: "Your Hero Title",
     subtitle: "Your Hero Subtitle",
     description: "A brief description of your main value proposition.",
+    ctaText: "Request Quote",
+    ctaSecondaryText: "View Products",
     image: "/placeholder.svg",
   },
   about: {
@@ -90,6 +128,12 @@ export const defaultSiteConfig: SiteConfig = {
     subtitle: "Learn more about what we do",
     description: "A brief description of your company's mission and values.",
     image: "/placeholder.svg",
+    stats: {
+      years: "10+",
+      clients: "500+",
+      products: "100+",
+      states: "20+",
+    },
   },
   features: {
     title: "Our Features",
@@ -116,10 +160,22 @@ export const defaultSiteConfig: SiteConfig = {
     address: "Your Address Here",
     phone: "(00) 0000-0000",
     email: "contact@example.com",
+    formLabels: {
+      name: "Nome",
+      email: "E-mail",
+      phone: "Telefone",
+      submit: "Enviar",
+    },
   },
   footer: {
     description: "A brief description for the footer area.",
     copyright: "© 2026 Your Company Name. All rights reserved.",
+    socialLinks: {
+      facebook: "",
+      instagram: "",
+      linkedin: "",
+      youtube: "",
+    },
   },
   seo: {
     title: "Your Company Name",

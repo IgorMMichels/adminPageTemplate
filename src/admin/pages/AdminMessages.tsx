@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
+import { defaultSiteConfig } from '@/data/siteConfig';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,7 +13,13 @@ import { useToast } from '@/hooks/use-toast';
 export default function AdminMessages() {
   const { siteConfig, updateSiteConfig, resetSiteConfig } = useAdmin();
   const { toast } = useToast();
-  const [localConfig, setLocalConfig] = useState(siteConfig);
+  // Guard against undefined siteConfig
+  if (!siteConfig) {
+    return <div className="flex items-center justify-center min-h-[60vh]">Loading...</div>;
+  }
+
+  const safeSiteConfig = siteConfig || defaultSiteConfig;
+  const [localConfig, setLocalConfig] = useState(safeSiteConfig);
 
   const handleSave = () => {
     updateSiteConfig(localConfig);
@@ -21,7 +28,7 @@ export default function AdminMessages() {
 
   const handleReset = () => {
     resetSiteConfig();
-    setLocalConfig(siteConfig);
+    setLocalConfig(safeSiteConfig);
     toast({ title: 'Configurações resetadas', description: 'Todas as mensagens voltaram ao padrão.' });
   };
 
