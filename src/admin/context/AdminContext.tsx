@@ -173,10 +173,27 @@ export function AdminProvider({ children }: { children: ReactNode }) {
     }
   });
 
-  const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
+  // Deep merge helper - merges source into target, filling missing fields from target
+function deepMerge<T extends Record<string, any>>(target: T, source: Partial<T>): T {
+  const result = { ...target };
+  for (const key in source) {
+    if (source[key] !== undefined) {
+      if (typeof source[key] === 'object' && source[key] !== null && !Array.isArray(source[key])) {
+        result[key] = deepMerge(target[key] || {}, source[key]);
+      } else {
+        result[key] = source[key];
+      }
+    }
+  }
+  return result;
+}
+
+const [siteConfig, setSiteConfig] = useState<SiteConfig>(() => {
     try {
       const stored = localStorage.getItem(STORAGE_KEYS.siteConfig);
-      return stored ? { ...defaultSiteConfig, ...JSON.parse(stored) } : defaultSiteConfig;
+      const parsed = stored ? JSON.parse(stored) : {};
+      // Deep merge: stored values take precedence, defaultSiteConfig fills missing fields
+      return deepMerge(defaultSiteConfig, parsed);
     } catch (e) {
       console.error('Error parsing siteConfig from localStorage:', e);
       localStorage.removeItem(STORAGE_KEYS.siteConfig);
