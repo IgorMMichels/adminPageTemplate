@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useAdmin } from '../context/AdminContext';
-import { defaultSiteConfig } from '@/data/siteConfig';
+import { SiteConfig, defaultSiteConfig } from '@/data/siteConfig';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -31,23 +31,23 @@ export default function AdminMessages() {
     toast({ title: 'Configurações resetadas', description: 'Todas as mensagens voltaram ao padrão.' });
   };
 
-  const updateField = (section: string, field: string, value: any) => {
+  const updateField = (section: keyof SiteConfig, field: string, value: string) => {
     setLocalConfig((prev) => ({
       ...prev,
       [section]: {
-        ...(prev as any)[section],
+        ...(prev[section] as Record<string, unknown>),
         [field]: value,
       },
     }));
   };
 
-  const updateNestedField = (section: string, subsection: string, field: string, value: any) => {
+  const updateNestedField = (section: keyof SiteConfig, subsection: string, field: string, value: string) => {
     setLocalConfig((prev) => ({
       ...prev,
       [section]: {
-        ...(prev as any)[section],
+        ...(prev[section] as Record<string, unknown>),
         [subsection]: {
-          ...((prev as any)[section] as any)[subsection],
+          ...((prev[section] as Record<string, Record<string, unknown>>)?.[subsection] ?? {}) as Record<string, unknown>,
           [field]: value,
         },
       },
